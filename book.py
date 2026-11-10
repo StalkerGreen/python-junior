@@ -4,12 +4,22 @@ class Book:
         self.author = author
         self.year = year
     def info(self):
-        return f"{self.title} — {self.author} {self.year}"
+        return f"{self.title} — {self.author}, {self.year}"
     def __str__(self):
         return self.info()
 
+    @property
+    def year(self):
+        return self._year
+    @year.setter
+    def year(self, value):
+        if not isinstance(value, int) or value <= 0:
+            raise ValueError("Год должен быть положительным числом")
+        self._year = value
+
+
 class EBook(Book):
-    def __init__(self, title, author, year, file_size):
+    def __init__(self,title,author,year,file_size):
         super().__init__(title,author,year)
         self.file_size = file_size
 
@@ -36,5 +46,23 @@ if __name__ == "__main__":
     print(ebook.info())
     print(ebook)
     print(f"Размер файла: {ebook.file_size} МБ")
-    print(f"Название: {ebook.title}")  
+    print(f"Название: {ebook.title}")
+
+# Проверка сеттера
+book = Book("Тест", "Автор", 2000)
+print(book.year)      # 2000
+book.year = 2020
+print(book.year)      # 2020
+
+# Проверка ValueError
+try:
+    book.year = -5
+except ValueError as e:
+    print(f"Поймали ошибку: {e}")
+
+# Проверка создания с некорректным годом
+try:
+    bad_book = Book("Плохая", "Книга", -1)
+except ValueError as e:
+    print(f"Поймали ошибку при создании: {e}")
 
