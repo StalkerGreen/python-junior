@@ -9,8 +9,7 @@ def load_notes():
         with open(NOTES_FILE,"r", encoding="utf-8")as f:
             return json.load(f)
     except json.JSONDecodeError:
-        print('Error 404: Notes file not found.'
-              'Файл повреждён, начинаем с пустого списка.')
+        print('Файл повреждён, начинаем с пустого списка.')
         return []
 def save_notes(notes):
     with open(NOTES_FILE, 'w', encoding="utf-8")as f:
@@ -21,7 +20,7 @@ def add_note(notes):
         print("Заметка не может быть пустой.")
         return
     notes.append(text)
-    print("Заметка добавлена.")
+    print(f"Заметка добавлена: «{text}»")
 def show_notes(notes):
     if not notes:
         print("Заметок пока нет.")
@@ -30,10 +29,11 @@ def show_notes(notes):
     for i, note in enumerate(notes, start=1):
         print(f"{i}. {note}")
 def delete_note(notes):
+    if not notes:
+        print("Заметок пока нет.")
+        return
     show_notes(notes)
 
-    if not notes:
-        return
     try:
         number = int(input("Введите номер заметки для удаления: "))
     except ValueError:
@@ -47,7 +47,6 @@ def delete_note(notes):
 
 def main():
     notes = load_notes()
-
     while True:
         print("\n--- Записная книжка ---")
         print("1 — добавить заметку")
