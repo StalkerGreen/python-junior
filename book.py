@@ -8,6 +8,17 @@ class Book:
     def __str__(self):
         return self.info()
 
+class EBook(Book):
+    def __init__(self, title, author, year, file_size):
+        super().__init__(title,author,year)
+        self.file_size = file_size
+
+    def info(self):
+        base = super().info()
+        return f"{base} (файл: {self.file_size} МБ)"
+
+
+########################################################################################
 
 if __name__ == "__main__":
     book1 = Book("Война и мир", "Лев Толстой", 1869)
@@ -20,3 +31,10 @@ if __name__ == "__main__":
 
     print(f"Название первой книги: {book1.title}")
     print(f"Автор второй книги: {book2.author}")
+
+    ebook = EBook("1984", "Джордж Оруэлл", 1949, 2.5)
+    print(ebook.info())
+    print(ebook)
+    print(f"Размер файла: {ebook.file_size} МБ")
+    print(f"Название: {ebook.title}")  
+
